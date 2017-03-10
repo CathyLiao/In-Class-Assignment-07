@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -28,11 +29,20 @@ public class MainActivity extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.editText);
         String userSecret  = editText.getText().toString();
 
+        editText.setText("");
+        user.setText("");
+
+        Toast t =Toast.makeText(this, "saved",Toast.LENGTH_SHORT);
+        t.show();
         myRef.setValue(userSecret);
+
     }
 
     public void reveal(View view) {
         Intent intent = new Intent(this, Main2Activity.class);
+
+        EditText target =(EditText)findViewById(R.id.target);
+        intent.putExtra("target",target.getText().toString());
         startActivity(intent);
     }
 

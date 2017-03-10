@@ -1,5 +1,6 @@
 package com.example.android.firebase;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -17,8 +18,13 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        Intent intent =getIntent();
+        String target = intent.getStringExtra("target");
+
+
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("secret");
+        DatabaseReference myRef = database.getReference(target).child("secret");
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -26,11 +32,14 @@ public class Main2Activity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
-
                 TextView textview = (TextView)findViewById(R.id.secretDisplay);
-                textview.setText(value);
-            }
+                if(value!=null){
+                    textview.setText(value);
+                }else{
+                    textview.setText(getResources().getString(R.string.error_msg));
+                }
 
+            }
 
             @Override
             public void onCancelled(DatabaseError error) {

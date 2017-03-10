@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Fire Base</string>
+    <string name="error_msg">No secret</string>
 </resources>
